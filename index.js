@@ -5,6 +5,7 @@ const app = express()
 const basicRoute = require("./routes/basic")
 const fetchRoute = require("./routes/fetch")
 
-app.use("/", basicRoute)
+// app.use("/", basicRoute)
+app.use("/", fetchRoute)
 
 module.exports.handler = serverless(app)
