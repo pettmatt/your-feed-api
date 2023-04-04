@@ -1,22 +1,22 @@
-const scrapeArticle = require("../services/scraper")
+const { scrapeArticles, scrapeArticleSnippet } = require("../services/scraper")
+const { checkLink } = require("../services/linkProcessing")
 const express = require("express")
 const router = express.Router()
 
 router.get("/fetch/:url/:ignoreDate", async (req, res, next) => {
-    const url = (
-        req.params.url.includes("https://www.") ||
-        req.params.url.includes("http://www.") 
-    ) ? req.params.url
-    : `http://www.${ req.params.url }`
+    const url = checkLink(req.params.url)
 
     const ignoreBeforeDate = req.params.ignoreDate
-    console.log("Ignore", ignoreBeforeDate)
-    const articles = await scrapeArticle(url, ignoreBeforeDate)
+    const articles = await scrapeArticles(url, ignoreBeforeDate)
 
-    return res.status(200).json({
-        message: `Hello from fetch!`,
-        articles,
-    })
+    return res.status(200).json({ articles })
+})
+
+router.get("/fetch/single/:url", async (req, res, next) => {
+    const url = checkLink(req.params.url)
+    const articles = await scrapeArticleSnippet(url)
+
+    return res.status(200).json({ articles })
 })
 
 module.exports = router

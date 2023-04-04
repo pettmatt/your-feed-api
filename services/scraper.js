@@ -1,6 +1,6 @@
 const puppeteer = require("puppeteer")
 
-const scrapeArticle = async (url, ignoreBeforeDate = null) => {
+const scrapeArticles = async (url, ignoreBeforeDate = null) => {
     const browser = await puppeteer.launch()
     const page = await browser.newPage()
     await page.goto(url)
@@ -25,7 +25,7 @@ const scrapeArticle = async (url, ignoreBeforeDate = null) => {
 
                 object.published = article.querySelector("time").getAttribute("datetime")
 
-                // Check if the article is out of scope. There is option to ignore articles before a date.
+                // Check if the article is out of scope. There is an option to ignore articles based on the date.
                 if ( ignoreBeforeDate !== null && object.published !== null )
                     if ( new Date(object.published) < new Date(ignoreBeforeDate) )
                         return
@@ -45,4 +45,36 @@ const scrapeArticle = async (url, ignoreBeforeDate = null) => {
     return articles
 }
 
-module.exports = scrapeArticle
+const scrapeArticleSnippet = async (url) => {
+    const browser = await puppeteer.launch()
+    const page = await browser.newPage()
+    await page.goto(url)
+
+    const articles = await page.evaluate((url) =>
+        Array
+            .from(document.querySelector("article"))
+            .map(article => {
+                const object = {
+                    url: url,
+                    img: {
+                        src: null,
+                        alt: ""
+                    },
+                    header: "",
+                    paragraph: "",
+                }
+
+                object.img.src = article.querySelector("img").getAttribute("href")
+                object.img.alt = article.querySelector("img").getAttribute("alt")
+                object.paragraph = article.querySelectorAll("p").slice(0, 3).textContent.trim()
+
+                return object
+            }), url
+    )
+
+    browser.close()
+
+    return articles
+}
+
+module.exports = { scrapeArticles, scrapeArticleSnippet }
