@@ -13,11 +13,10 @@ authorAvatar: 'https://avatars1.githubusercontent.com/u/13742415?s=200&v=4'
 
 # About the API
 
-Purpose: Scrape websites and display their articles on convenient format. 
-
-Status: Onhold
-Reason: The fundamental functionality needs redesigning or additional algorythm that can scrape majority of websites. Currently the api searches for HTML-tags, such as "article" to get needed information. This functionality breaks when websites use div-tags to wrap the article contents.
-Frontend: Published in its own repository named [your-feed](https://github.com/pettmatt/your-feed).
+- Purpose: Scrape websites and display their articles on convenient format. 
+- Status: Onhold
+- Reason: The fundamental functionality needs redesigning or additional algorythm that can scrape majority of websites. Currently the api searches for HTML-tags, such as "article" to get needed information. This functionality breaks when websites use div-tags to wrap the article contents.
+- Frontend: Published in its own repository named [your-feed](https://github.com/pettmatt/your-feed).
 
 # Serverless Framework Node Express API on AWS
 
