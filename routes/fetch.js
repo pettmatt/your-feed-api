@@ -1,10 +1,22 @@
-const express = require('express')
+const { scrapeArticles, scrapeArticleSnippet } = require("../services/scraper")
+const { checkLink } = require("../services/linkProcessing")
+const express = require("express")
 const router = express.Router()
 
-app.get("/fetch/:url", (req, res, next) => {
-    return res.status(200).json({
-        message: `Hello from path! The url ${ url }`,
-    })
+router.get("/fetch/:url/:ignoreDate", async (req, res, next) => {
+    const url = checkLink(req.params.url)
+
+    const ignoreBeforeDate = req.params.ignoreDate
+    const articles = await scrapeArticles(url, ignoreBeforeDate)
+
+    return res.status(200).json({ articles })
+})
+
+router.get("/fetch/single/:url", async (req, res, next) => {
+    const url = checkLink(req.params.url)
+    const articles = await scrapeArticleSnippet(url)
+
+    return res.status(200).json({ articles })
 })
 
 module.exports = router
