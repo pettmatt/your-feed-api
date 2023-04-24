@@ -1,4 +1,4 @@
-const { ssr } = require("./test.js")
+const { ssr } = require("./puppeteer-chrome.js")
 const puppeteer = require("puppeteer")
 
 let WSEndpoint = null
@@ -15,6 +15,7 @@ const scrapeArticles = async (url, ignoreBeforeDate = null) => {
 }
 
 const scrapeArticleSnippet = async (url) => {
+    // Needs to be modified when debugging is done.
     const browser = await puppeteer.launch()
     const page = await browser.newPage()
     await page.goto(url)
