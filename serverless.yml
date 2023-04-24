@@ -5,8 +5,17 @@ provider:
   name: aws
   runtime: nodejs18.x
 
+package:
+  exclude:
+    - node_modules/puppeteer/.local-chromium/**
+
 plugins:
   - serverless-offline
+  - serverless-plugin-chrome
+
+custom:
+  serverless-offline:
+    httpPort: 3000
 
 functions:
   api:

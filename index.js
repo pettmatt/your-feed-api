@@ -3,7 +3,6 @@ const serverless = require("serverless-http")
 const express = require("express")
 const app = express()
 
-
 app.use("/", fetchRoute)
 
 app.get("/", (req, res, next) => {
