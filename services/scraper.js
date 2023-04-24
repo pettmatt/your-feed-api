@@ -1,4 +1,4 @@
-const { ssr } = require("./puppeteer-chrome.js")
+const { ssr } = require("./puppeteerProcesses.js")
 const puppeteer = require("puppeteer")
 
 let WSEndpoint = null
