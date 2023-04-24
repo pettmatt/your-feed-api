@@ -3,7 +3,7 @@ const express = require("express")
 const app = express()
 
 const basicRoute = require("./routes/basic")
-const fetchRoute = require("./routes/fetch")
+// const fetchRoute = require("./routes/fetch")
 
 app.use("/", basicRoute)
 
